@@ -10,7 +10,7 @@ import com.derkcode.gestor_archivos_clinicos.ui.History_ui;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import com.derkcode.gestor_archivos_clinicos.util.PdfGenerator;
+import com.derkcode.gestor_archivos_clinicos.util.PdfGeneratorReceta;
 import java.awt.Window;
 
 public class Consulta_Logic {
@@ -43,7 +43,7 @@ public class Consulta_Logic {
                 JOptionPane.showMessageDialog(null, "Síntomas y tratamiento son obligatorios");
             } else {
                 query.insertarConsulta(idPaciente, enfermedad, sintomas, tratamiento, sugerencias, fecha);
-                PdfGenerator.generateReceta(expediente, enfermedad, sintomas, tratamiento, sugerencias);
+                PdfGeneratorReceta.generateReceta(expediente, enfermedad, sintomas, tratamiento, sugerencias);
                 JOptionPane.showMessageDialog(null, "Receta generada como receta_" + expediente + "_" + LocalDateTime.now().toString().replace(":", "-") + ".pdf");
                 limpiar();
             }
@@ -69,7 +69,7 @@ public class Consulta_Logic {
             String sintomas = c_view.getTxtAreaSintomas().getText().trim();
             String tratamiento = c_view.getTxtAreaTratamiento().getText().trim();
             String sugerencias = c_view.getTxtAreaSugerencias().getText().trim();
-            PdfGenerator.generateReceta(expediente, enfermedad, sintomas, tratamiento, sugerencias);
+            PdfGeneratorReceta.generateReceta(expediente, enfermedad, sintomas, tratamiento, sugerencias);
             JOptionPane.showMessageDialog(null, "PDF generado como receta_" + expediente + "_" + LocalDateTime.now().toString().replace(":", "-") + ".pdf");
         });
         

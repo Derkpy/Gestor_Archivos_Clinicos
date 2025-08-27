@@ -155,7 +155,7 @@ public class Menu extends javax.swing.JFrame {
 
         Prestamo.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         Prestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedir-prestado.png")));
-        Prestamo.setText("PRESTAMOS");
+        Prestamo.setText("MI PERFIL");
         Prestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PrestamoActionPerformed(evt);
@@ -167,12 +167,13 @@ public class Menu extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(115, 115, 115)
                 .addComponent(Buscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(129, 129, 129)
                 .addComponent(Prestamo)
-                .addGap(0, 396, Short.MAX_VALUE))
+                .addGap(111, 111, 111))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

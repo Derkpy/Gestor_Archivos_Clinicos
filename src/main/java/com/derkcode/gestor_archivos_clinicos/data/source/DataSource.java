@@ -7,9 +7,11 @@ import com.derkcode.gestor_archivos_clinicos.data.DataDao;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
 import com.derkcode.gestor_archivos_clinicos.data.connection.DatabaseConnection;
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
+import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
 import com.derkcode.gestor_archivos_clinicos.ui.New_File;
 import com.derkcode.gestor_archivos_clinicos.ui.Consulta;
+import com.derkcode.gestor_archivos_clinicos.util.Session;
 import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -313,31 +315,69 @@ public class DataSource implements DataDao {
         }
 
     @Override
-public List<Consulta_Model> extraerConsultas(Long id) {
-    List<Consulta_Model> list = new ArrayList<>();
-    String sql = "SELECT * FROM consultas WHERE id_paciente = ?";
-    try (Connection conn = DatabaseConnection.getInstance().getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setLong(1, id); // Usar setLong en lugar de setString para un campo INTEGER
-        try (ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                Consulta_Model c = new Consulta_Model();
-                c.setId_consulta(rs.getLong("id_consulta"));
-                c.setId_paciente(rs.getLong("id_paciente"));
-                c.setEnfermedad(rs.getString("enfermedad"));
-                c.setSintomas(rs.getString("sintomas"));
-                c.setTratamiento(rs.getString("tratamiento"));
-                c.setSugerencias(rs.getString("sugerencias"));
-                c.setFecha(rs.getString("fecha"));
-                list.add(c);
+    public List<Consulta_Model> extraerConsultas(Long id) {
+        List<Consulta_Model> list = new ArrayList<>();
+        String sql = "SELECT * FROM consultas WHERE id_paciente = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id); // Usar setLong en lugar de setString para un campo INTEGER
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Consulta_Model c = new Consulta_Model();
+                    c.setId_consulta(rs.getLong("id_consulta"));
+                    c.setId_paciente(rs.getLong("id_paciente"));
+                    c.setEnfermedad(rs.getString("enfermedad"));
+                    c.setSintomas(rs.getString("sintomas"));
+                    c.setTratamiento(rs.getString("tratamiento"));
+                    c.setSugerencias(rs.getString("sugerencias"));
+                    c.setFecha(rs.getString("fecha"));
+                    list.add(c);
+                }
+                System.out.println("Consultas encontradas para id_paciente " + id + ": " + list.size());
             }
-            System.out.println("Consultas encontradas para id_paciente " + id + ": " + list.size());
+        } catch (SQLException ex) {
+            System.err.println("Error al consultar: " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.err.println("Error al consultar: " + ex.getMessage());
+        return list;
     }
-    return list;
-}
+
+    @Override
+    public List<Doctor_model> extraerInfoDoctor(String user, String password) {
+        
+        List<Doctor_model> list = new ArrayList<>() ;
+        
+        String sql = "SELECT name, specialty, phone_number, cedula, address FROM doctores WHERE user = '"+user+"' AND "+"password = '"+password +"';";
+        
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+                    Doctor_model doc = new Doctor_model();
+                    doc.setName(rs.getString("name"));
+                    doc.setSpecialty(rs.getString("specialty"));
+                    doc.setPhone_number(rs.getLong("phone_number"));
+                    doc.setCedula(rs.getLong("cedula"));
+                    doc.setAddress(rs.getString("address"));
+                    list.add(doc);
+                    
+                }
+            }
+            
+            for (Doctor_model dato : list){
+                
+                Session.starSession(user, dato.getName(), dato.getSpecialty(), dato.getPhone_number(), dato.getCedula(), dato.getAddress());
+                
+                
+            }
+            
+        }catch (SQLException ex){
+            System.err.println("Error al consultar: " + ex.getMessage());
+        }
+        
+        return list;
+    }
+    
     
     
 }

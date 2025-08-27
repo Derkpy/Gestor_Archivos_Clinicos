@@ -4,9 +4,13 @@
  */
 package com.derkcode.gestor_archivos_clinicos.ui.login;
 
+import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.ui.Menu;
 import java.awt.Image;
 import java.net.URL;
+import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,8 +22,10 @@ import javax.swing.JOptionPane;
  */
 
 public class Login extends javax.swing.JFrame {
+    private List<Doctor_model> doctor = new ArrayList<>();
+    DataSource query = new DataSource();
 
-    private boolean cambioContrasena = false; // Bandera para alternar entre login y cambio de contraseña
+    private boolean cambioContrasena = false; 
 
     /**
      * Creates new form Login
@@ -276,15 +282,27 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Rellene todos los campos");
                 txtUsuario.setText("");
                 txtNuevaContrasena.setText("");
-            } else {
-                if (usuario.equals("app") && pasw.equals("2024")) {
-                    Menu b = new Menu();
-                    b.setVisible(true);
-                    this.dispose();
-                } else {
+            } else { 
+                //if (usuario.equals("app") && pasw.equals("2024")) {
+                
+                //doctor = ;
+                
+                
+                //System.out.println(doctor.get(0).toString());
+                // System.out.println(doctor.get(1).getUser());
+                
+                if (query.extraerInfoDoctor(usuario, pasw).isEmpty()) {
+                    
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
                     txtUsuario.setText("");
                     txtNuevaContrasena.setText("");
+                
+                } else {
+                    
+                    Menu b = new Menu();
+                    b.setVisible(true);
+                    this.dispose();
+                
                 }
             }
         }

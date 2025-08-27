@@ -6,6 +6,7 @@ package com.derkcode.gestor_archivos_clinicos.data;
 
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
+import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
 import com.derkcode.gestor_archivos_clinicos.ui.New_File;
 import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
@@ -41,6 +42,8 @@ public interface DataDao {
     public ArrayList<Paciente> verPaciente(String expediente);
     
     public List<Consulta_Model> extraerConsultas(Long id);
+    
+    public List<Doctor_model> extraerInfoDoctor(String user, String password);
     
     //public List<Consulta_Model> extraerConsulta(Long id)
 }
