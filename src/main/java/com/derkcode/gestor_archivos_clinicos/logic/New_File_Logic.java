@@ -5,15 +5,15 @@
 package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
-import com.derkcode.gestor_archivos_clinicos.ui.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
-import com.derkcode.gestor_archivos_clinicos.ui.Menu;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
 import java.awt.Window;
-import com.derkcode.gestor_archivos_clinicos.ui.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
 
 /**
  *

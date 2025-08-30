@@ -9,10 +9,10 @@ import com.derkcode.gestor_archivos_clinicos.data.connection.DatabaseConnection;
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
-import com.derkcode.gestor_archivos_clinicos.ui.New_File;
-import com.derkcode.gestor_archivos_clinicos.ui.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
 import com.derkcode.gestor_archivos_clinicos.util.Session;
-import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -346,7 +346,7 @@ public class DataSource implements DataDao {
         
         List<Doctor_model> list = new ArrayList<>() ;
         
-        String sql = "SELECT name, specialty, phone_number, cedula, address FROM doctores WHERE user = '"+user+"' AND "+"password = '"+password +"';";
+        String sql = "SELECT id_doctor, name, specialty, phone_number, cedula, address FROM doctores WHERE user = '"+user+"' AND "+"password = '"+password +"';";
         
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -354,10 +354,11 @@ public class DataSource implements DataDao {
             try (ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()){
                     Doctor_model doc = new Doctor_model();
+                    doc.setId_doctor(rs.getLong("id_doctor"));
                     doc.setName(rs.getString("name"));
                     doc.setSpecialty(rs.getString("specialty"));
                     doc.setPhone_number(rs.getLong("phone_number"));
-                    doc.setCedula(rs.getLong("cedula"));
+                    doc.setCedula(rs.getString("cedula"));
                     doc.setAddress(rs.getString("address"));
                     list.add(doc);
                     
@@ -366,7 +367,7 @@ public class DataSource implements DataDao {
             
             for (Doctor_model dato : list){
                 
-                Session.starSession(user, dato.getName(), dato.getSpecialty(), dato.getPhone_number(), dato.getCedula(), dato.getAddress());
+                Session.starSession(dato.getId_doctor(), user, dato.getName(), dato.getSpecialty(), dato.getPhone_number(), dato.getCedula(), dato.getAddress());
                 
                 
             }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.derkcode.gestor_archivos_clinicos.util;
+package com.derkcode.gestor_archivos_clinicos.util.PDFsGenerator;
 
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import com.derkcode.gestor_archivos_clinicos.util.Session;
 import com.derkcode.gestor_archivos_clinicos.util.Session;
 import java.awt.Color;
 import java.io.InputStream;

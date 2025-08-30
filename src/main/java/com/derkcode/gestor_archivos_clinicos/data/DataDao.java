@@ -8,8 +8,8 @@ import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
-import com.derkcode.gestor_archivos_clinicos.ui.New_File;
-import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
 import java.util.ArrayList;
 import java.util.List;
 

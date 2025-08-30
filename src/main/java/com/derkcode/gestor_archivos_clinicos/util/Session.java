@@ -18,14 +18,16 @@ public class Session {
     
     private static Session instance;
     
+    private long id_doctor;
     private String user;
     private String username;
     private String specialty;
     private long phone_number;
-    private long cedula;
+    private String cedula;
     private String address;
 
-    public Session(String user, String username, String specialty, long phone_number, long cedula, String address) {
+    public Session(long id_doctor, String user, String username, String specialty, long phone_number, String cedula, String address) {
+        this.id_doctor = this.id_doctor;
         this.user = user;
         this.username = username;
         this.specialty = specialty;
@@ -34,9 +36,9 @@ public class Session {
         this.address = address;
     }
     
-    public static void starSession(String user, String username,String specialty, long phone_number, long cedula, String address){
+    public static void starSession(long id_doctor, String user, String username,String specialty, long phone_number, String cedula, String address){
         if (instance == null){
-            instance = new Session(user, username,specialty, phone_number, cedula, address);
+            instance = new Session(id_doctor, user, username,specialty, phone_number, cedula, address);
         }
     }
     
@@ -54,6 +56,7 @@ public class Session {
         
         Doctor_model doc = new Doctor_model();
         
+        doc.setId_doctor(id_doctor);
         doc.setName(username);
         doc.setSpecialty(specialty);
         doc.setPhone_number(phone_number);
@@ -64,11 +67,12 @@ public class Session {
         return All;
     }
     
+    public long getIdDoctor(){return id_doctor; }
     public String getUser() { return user; }
     public String getUsername() {return username; }
     public String getSpeciality() { return specialty; }
     public long getPhoneNumber() { return phone_number; }
-    public long getCedula() { return cedula; }
+    public String getCedula() { return cedula; }
     public String getAddress() { return address; }
     
 }

@@ -2,11 +2,11 @@ package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
-import com.derkcode.gestor_archivos_clinicos.ui.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.Consulta;
-import com.derkcode.gestor_archivos_clinicos.ui.History_ui;
-import com.derkcode.gestor_archivos_clinicos.ui.Menu;
-import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;

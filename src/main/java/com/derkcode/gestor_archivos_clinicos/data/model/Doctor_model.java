@@ -15,7 +15,7 @@ public class Doctor_model {
     private String user;
     private String specialty;
     private long phone_number;
-    private long cedula;
+    private String cedula;
     private String address;
 
     public long getId_doctor() {
@@ -58,11 +58,11 @@ public class Doctor_model {
         this.phone_number = phone_number;
     }
 
-    public long getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(long cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 

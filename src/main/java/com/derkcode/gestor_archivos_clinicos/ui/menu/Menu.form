@@ -252,7 +252,7 @@
                       <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
                       <Component id="Buscar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
-                      <Component id="Prestamo" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_perfil" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -262,7 +262,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Ingresar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Buscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Prestamo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_perfil" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -296,7 +296,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="Prestamo">
+            <Component class="javax.swing.JButton" name="btn_perfil">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="11" style="1"/>
@@ -307,7 +307,7 @@
                 <Property name="text" type="java.lang.String" value="MI PERFIL"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PrestamoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_perfilActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

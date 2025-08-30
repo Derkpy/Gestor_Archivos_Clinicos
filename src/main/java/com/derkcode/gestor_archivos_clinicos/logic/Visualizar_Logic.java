@@ -5,9 +5,9 @@
 package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
-import com.derkcode.gestor_archivos_clinicos.ui.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.Visualizar;
-import com.derkcode.gestor_archivos_clinicos.ui.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
 import javax.swing.JOptionPane;
 
 public class Visualizar_Logic {

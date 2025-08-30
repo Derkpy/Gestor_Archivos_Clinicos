@@ -1,4 +1,4 @@
-package com.derkcode.gestor_archivos_clinicos.ui;
+package com.derkcode.gestor_archivos_clinicos.ui.Management;
 
 import com.derkcode.gestor_archivos_clinicos.logic.Visualizar_Logic;
 import java.awt.List;

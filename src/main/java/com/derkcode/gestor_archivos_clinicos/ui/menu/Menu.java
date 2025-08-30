@@ -1,9 +1,12 @@
-package com.derkcode.gestor_archivos_clinicos.ui;
+package com.derkcode.gestor_archivos_clinicos.ui.menu;
 
 import javax.swing.ImageIcon;
 import com.derkcode.gestor_archivos_clinicos.logic.New_File_Logic;
 import java.awt.event.WindowAdapter;
 import com.derkcode.gestor_archivos_clinicos.data.connection.DatabaseConnection; // Ajusta el paquete según tu proyecto
+import com.derkcode.gestor_archivos_clinicos.logic.Profile_Doctor_Logic;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.profile.Profile_Doctor;
 import java.awt.event.WindowEvent;
 
 /**
@@ -59,7 +62,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Ingresar = new javax.swing.JButton();
         Buscar = new javax.swing.JButton();
-        Prestamo = new javax.swing.JButton();
+        btn_perfil = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -153,12 +156,12 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        Prestamo.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        Prestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedir-prestado.png")));
-        Prestamo.setText("MI PERFIL");
-        Prestamo.addActionListener(new java.awt.event.ActionListener() {
+        btn_perfil.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        btn_perfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedir-prestado.png")));
+        btn_perfil.setText("MI PERFIL");
+        btn_perfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PrestamoActionPerformed(evt);
+                btn_perfilActionPerformed(evt);
             }
         });
 
@@ -172,7 +175,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(115, 115, 115)
                 .addComponent(Buscar)
                 .addGap(129, 129, 129)
-                .addComponent(Prestamo)
+                .addComponent(btn_perfil)
                 .addGap(111, 111, 111))
         );
         jPanel1Layout.setVerticalGroup(
@@ -180,7 +183,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(Ingresar)
                 .addComponent(Buscar)
-                .addComponent(Prestamo))
+                .addComponent(btn_perfil))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -325,12 +328,15 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrestamoActionPerformed
-        //Prestamos v = new Prestamos();
-        //v.setVisible(true);
+    private void btn_perfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_perfilActionPerformed
+        
+        Profile_Doctor p = new Profile_Doctor();
+        p.setVisible(true);
+        new Profile_Doctor_Logic(p);
         this.dispose();
+        
 
-    }//GEN-LAST:event_PrestamoActionPerformed
+    }//GEN-LAST:event_btn_perfilActionPerformed
 
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
@@ -350,9 +356,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Autores a = new Autores();
-        //a.setVisible(true);
-        this.dispose();
+        
+        
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -363,7 +369,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Ingresar;
-    private javax.swing.JButton Prestamo;
+    private javax.swing.JButton btn_perfil;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

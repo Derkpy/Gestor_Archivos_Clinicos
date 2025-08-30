@@ -1,4 +1,4 @@
-package com.derkcode.gestor_archivos_clinicos.ui;
+package com.derkcode.gestor_archivos_clinicos.ui.menu;
 
 import java.util.ArrayList;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;

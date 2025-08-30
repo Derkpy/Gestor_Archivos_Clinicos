@@ -5,11 +5,11 @@
 package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
-import com.derkcode.gestor_archivos_clinicos.ui.History_ui;
-import com.derkcode.gestor_archivos_clinicos.ui.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
-import com.derkcode.gestor_archivos_clinicos.ui.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.Menu;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,14 +24,16 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 
 public class History_Logic {
+    
     private History_ui view;
     private DataSource query = new DataSource();
     private Long id;
     private String name;
     private String expediente;
-    private List<Consulta_Model> consultas; // Almacenar la lista de consultas
+    private List<Consulta_Model> consultas;
 
-    public History_Logic(History_ui view, long id, String expediente, String name) {
+    public History_Logic(History_ui view, long id, String expediente, String name) 
+    {
         this.view = view;
         this.id = id;
         this.name = name;
@@ -43,7 +45,7 @@ public class History_Logic {
     private void initializeComponents() {
         view.getLbName().setText(name);
         view.getLbExpediente().setText(expediente);
-    }
+    }   
 
     private void iniListeners() {
         iniTabla();

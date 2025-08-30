@@ -5,7 +5,7 @@
 package com.derkcode.gestor_archivos_clinicos.ui.login;
 
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
-import com.derkcode.gestor_archivos_clinicos.ui.Menu;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
 import java.awt.Image;
 import java.net.URL;
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;

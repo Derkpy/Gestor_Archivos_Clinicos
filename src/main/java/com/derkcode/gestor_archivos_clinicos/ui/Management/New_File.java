@@ -1,4 +1,4 @@
-package com.derkcode.gestor_archivos_clinicos.ui;
+package com.derkcode.gestor_archivos_clinicos.ui.Management;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;

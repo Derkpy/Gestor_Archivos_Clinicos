@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.derkcode.gestor_archivos_clinicos.ui;
+package com.derkcode.gestor_archivos_clinicos.ui.Management;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,6 +19,7 @@ public class History_ui extends javax.swing.JFrame {
      */
     public History_ui() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
