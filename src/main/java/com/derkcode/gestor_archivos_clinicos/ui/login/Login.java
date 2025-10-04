@@ -9,6 +9,7 @@ import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
 import java.awt.Image;
 import java.net.URL;
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
@@ -283,26 +284,16 @@ public class Login extends javax.swing.JFrame {
                 txtUsuario.setText("");
                 txtNuevaContrasena.setText("");
             } else { 
-                //if (usuario.equals("app") && pasw.equals("2024")) {
                 
-                //doctor = ;
-                
-                
-                //System.out.println(doctor.get(0).toString());
-                // System.out.println(doctor.get(1).getUser());
-                
-                if (query.extraerInfoDoctor(usuario, pasw).isEmpty()) {
+                if (query.extraerSesionDoctor(usuario, pasw).isEmpty()) {
                     
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
                     txtUsuario.setText("");
                     txtNuevaContrasena.setText("");
                 
                 } else {
-                    
-                    Menu b = new Menu();
-                    b.setVisible(true);
-                    this.dispose();
-                
+                    WindowManager.closeWindow(Login.class);
+                    WindowManager.showWindow(Menu.class);
                 }
             }
         }

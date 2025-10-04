@@ -1,6 +1,7 @@
 package com.derkcode.gestor_archivos_clinicos.app;
 
 import com.derkcode.gestor_archivos_clinicos.ui.login.Login;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 /**
  *
  * @author derek
@@ -37,7 +38,8 @@ public class Main {
         /* Create and display the login form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                WindowManager.showWindow(Login.class);
+                //new Login().setVisible(true);
             }
         });
     }

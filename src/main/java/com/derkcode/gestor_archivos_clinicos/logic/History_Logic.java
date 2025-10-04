@@ -5,11 +5,10 @@
 package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.management.*;
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
-import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
+import com.derkcode.gestor_archivos_clinicos.ui.menu.*;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -43,22 +42,25 @@ public class History_Logic {
     }
 
     private void initializeComponents() {
+        
+        iniTabla();
         view.getLbName().setText(name);
         view.getLbExpediente().setText(expediente);
+    
     }   
 
     private void iniListeners() {
-        iniTabla();
+       
+        
         
         view.getBtnBack().addActionListener(e -> {
-            Window[] windows = Window.getWindows();
-            for (Window w : windows) {
-                if (w instanceof Buscar && !w.isVisible()) {
-                    w.setVisible(true);
-                    break;
-                }
-            }
-           view.dispose();
+           
+            WindowManager.closeWindow(History_ui.class);
+            
+            WindowManager.showWindow(Buscar.class, (vista) -> {
+                new Buscar_Logic(vista);
+            });
+            
         });
     }
 
@@ -98,17 +100,16 @@ public class History_Logic {
     }
 
     private void openConsultaView(Long idConsulta, int row) {
-        Consulta consultaView = new Consulta(id, expediente, "ver_consulta");
         if (row >= 0 && row < consultas.size()) {
-            Consulta_Model consulta = consultas.get(row); // Obtener la consulta de la lista
-            consultaView.getTxtFieldEnfermedad().setText(consulta.getEnfermedad());
-            consultaView.getTxtAreaSintomas().setText(consulta.getSintomas());
-            consultaView.getTxtAreaTratamiento().setText(consulta.getTratamiento());
-            consultaView.getTxtAreaSugerencias().setText(consulta.getSugerencias());
+            Consulta_Model consulta = consultas.get(row);
+            WindowManager.showWindow(Consulta.class, (vista) -> {
+                vista.setIdPaciente(id);
+                vista.setExpediente(expediente);
+                vista.setModo("ver_consulta");
+                new Consulta_Logic(vista, id, expediente, "ver_consulta", consulta);
+            });
+            //WindowManager.hideWindow(History_ui.class); // Oculta History_ui
         }
-        consultaView.setVisible(true);
-        new Consulta_Logic(consultaView);
-        view.setVisible(false);
     }
 
     class ButtonRenderer extends JButton implements TableCellRenderer {

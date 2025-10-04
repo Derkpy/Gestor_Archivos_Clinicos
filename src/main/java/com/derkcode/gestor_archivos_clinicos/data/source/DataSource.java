@@ -9,10 +9,10 @@ import com.derkcode.gestor_archivos_clinicos.data.connection.DatabaseConnection;
 import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.management.New_File;
 import com.derkcode.gestor_archivos_clinicos.util.Session;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.profile.Profile_Doctor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -133,35 +133,35 @@ public class DataSource implements DataDao {
         }
     }
 
-    @Override
-    public boolean expedienteExiste(String expediente) {
-        try {
-            // Eliminar los caracteres "-" y "/" del expediente
-            expediente = expediente.replace("-", "").replace("/", "");
+        @Override
+        public boolean expedienteExiste(String expediente) {
+            try {
+                // Eliminar los caracteres "-" y "/" del expediente
+                expediente = expediente.replace("-", "").replace("/", "");
 
-            PreparedStatement pstmt = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT COUNT(*) FROM pacientes WHERE REPLACE(expediente, '-', '') = ? OR REPLACE(expediente, '/', '') = ?");
-            pstmt.setString(1, expediente);
-            pstmt.setString(2, expediente);
+                PreparedStatement pstmt = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT COUNT(*) FROM pacientes WHERE REPLACE(expediente, '-', '') = ? OR REPLACE(expediente, '/', '') = ?");
+                pstmt.setString(1, expediente);
+                pstmt.setString(2, expediente);
 
-            ResultSet rs = pstmt.executeQuery();
-        
-            // Si el resultado de la consulta es mayor que 0, significa que el expediente ya existe
-            if (rs.next() && rs.getInt(1) > 0) {
-                return true;
+                ResultSet rs = pstmt.executeQuery();
+
+                // Si el resultado de la consulta es mayor que 0, significa que el expediente ya existe
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return true;
+                }
+            } catch (SQLException e) {
+
+                System.out.println(e.getMessage());
+
             }
-        } catch (SQLException e) {
-       
-            System.out.println(e.getMessage());
-    
+            return false;
+
         }
-        return false;
-    
-    }
 
     @Override
     public void insertarConsulta(Long idPaciente, String enfermedad, String sintomas, String tratamiento, String sugerencias, String fecha) {
         String sql = "INSERT INTO consultas(id_paciente, enfermedad, sintomas, tratamiento, sugerencias, fecha) " +
-                     "VALUES(?,?,?,?,?,?)";
+                     "VALUES(?,?,?,?,?,?) ";
 
         try (PreparedStatement pstmt = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             // Establecer parámetros
@@ -187,9 +187,11 @@ public class DataSource implements DataDao {
     public List<Paciente> buscarPacientes(String buscar) {
         List<Paciente> lista = new ArrayList<>();
         String sql = "SELECT id_paciente, expediente, curp, nombre, localidad FROM pacientes WHERE expediente LIKE ? OR curp LIKE ? OR nombre LIKE ?";
+        System.out.println("Ejecutando consulta con buscar: '" + buscar + "'");
 
         try (PreparedStatement pstmt = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             String likePattern = "%" + buscar + "%";
+            System.out.println("Patrón LIKE: '" + likePattern + "'");
             pstmt.setString(1, likePattern);
             pstmt.setString(2, likePattern);
             pstmt.setString(3, likePattern);
@@ -208,6 +210,7 @@ public class DataSource implements DataDao {
         } catch (SQLException ex) {
             System.err.println("Error al consultar los pacientes para la tabla: " + ex.getMessage());
         }
+        System.out.println("Resultados encontrados: " + lista.size());
         return lista;
     }
 
@@ -342,7 +345,7 @@ public class DataSource implements DataDao {
     }
 
     @Override
-    public List<Doctor_model> extraerInfoDoctor(String user, String password) {
+    public List<Doctor_model> extraerSesionDoctor(String user, String password) {
         
         List<Doctor_model> list = new ArrayList<>() ;
         
@@ -378,7 +381,55 @@ public class DataSource implements DataDao {
         
         return list;
     }
+
+    @Override
+    public boolean actualizarPerfil(Profile_Doctor s, long id_doctor) {
+        String sql = "UPDATE doctores SET name = ?, specialty = ?, phone_number = ?, cedula = ?, address = ?, horario = ? "
+                + "WHERE id_doctor = ?";
+
+        try (PreparedStatement pstmt = DatabaseConnection.getInstance()
+                .getConnection()
+                .prepareStatement(sql)) {
+
+            // Validar campos obligatorios
+            if (s.getTextFName().getText().isEmpty()
+                    || s.getTextSpeciality().getText().isEmpty()
+                    || s.getTextAddress().getText().isEmpty()
+                    || s.getTextHorario().getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+                return false;
+            }
+
+            pstmt.setString(1, s.getTextFName().getText());
+            pstmt.setString(2, s.getTextSpeciality().getText());
+            pstmt.setString(3, s.getTextPhone().getText());
+            pstmt.setString(4, s.getTextCed().getText());
+            pstmt.setString(5, s.getTextAddress().getText());
+            pstmt.setString(6, s.getTextHorario().getText());
+            pstmt.setLong(7, id_doctor);
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("La actualización falló, no se afectaron filas.");
+            }
+
+            return true; // éxito
+
+        } catch (SQLException ex) {
+            System.err.println("Error al actualizar doctor: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al actualizar el perfil: " + ex.getMessage());
+            return false;
+        }
+    }
+
+
+    @Override
+    public Doctor_model actualizarContraseña(Profile_Doctor s) {
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     
-    
+    }
     
 }

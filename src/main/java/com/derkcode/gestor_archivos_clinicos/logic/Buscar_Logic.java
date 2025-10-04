@@ -3,10 +3,11 @@ package com.derkcode.gestor_archivos_clinicos.logic;
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
 import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Consulta;
 import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -30,18 +31,31 @@ public class Buscar_Logic {
     }
 
     private void iniListeners() {
-        // Evento del botón Buscar
+        
+        closeListeners.registerComponent(view.getBtnBuscar());
+        closeListeners.registerComponent(view.getBtnConsulta());
+        closeListeners.registerComponent(view.getBtnHistorial());
+        closeListeners.registerComponent(view.getBtnVer());
+        closeListeners.registerComponent(view.getDelete());
+        closeListeners.registerComponent(view.getRegresar());
+        
+        closeListeners.clearAllListeners();
+        
         view.getBtnBuscar().addActionListener(e -> {
+            
             buscador.clear();
-            String buscar = view.getTxtBuscar().getText();
+            String buscar = view.getTxtBuscar().getText().trim();
             buscador.add(buscar);
+            System.out.println("Busqueda con: "+buscar);
             mostrarBusqueda(buscar);
             view.getTxtBuscar().setText("");
         });
 
         // Evento del botón Ver (corregido con depuración)
         view.getBtnVer().addActionListener(e -> {
-            List<Paciente> info = new ArrayList<Paciente>();
+            
+            
+            List<Paciente> info = new ArrayList<>();
             if (buscador.isEmpty()) {
                 info = dataSource.consultarPacientes();
                 System.out.println("OPCION 1");
@@ -50,54 +64,49 @@ public class Buscar_Logic {
                 System.out.println("OPCION 2");
                 System.out.println(buscador.get(0));
             }
+
             if (view.Tabla_Pacientes.getSelectedRow() > -1 && !info.isEmpty()) {
                 Paciente p = info.get(view.Tabla_Pacientes.getSelectedRow());
-                
+
                 String expediente = p.getExpediente();
                 long id = p.getId_paciente();
                 String name = p.getNombre();
 
-                Visualizar visualizar = new Visualizar(id, expediente, name);
+                // Cerramos si había una ventana Visualizar abierta
+                WindowManager.closeWindow(Visualizar.class);
 
-                // Obtener y llenar los datos del paciente
-                ArrayList<Paciente> datosPacientes = dataSource.verPaciente(expediente);
-                if (!datosPacientes.isEmpty()) {
-                    Paciente datosPaciente = datosPacientes.get(0); // Tomamos el primer paciente
-                    visualizar.expediente.setText(datosPaciente.getExpediente());
-                    visualizar.Fecha.setText(datosPaciente.getFecha());
-                    visualizar.Nombre.setText(datosPaciente.getNombre());
-                    visualizar.Nacimiento.setText(datosPaciente.getFecha_nacimiento()); // Ajustado a getFechaNacimiento
-                    visualizar.Sexo.setSelectedItem(datosPaciente.getSexo());
-                    visualizar.Direccion.setText(datosPaciente.getDomicilio());
-                    visualizar.Localidad.setText(datosPaciente.getLocalidad());
-                    visualizar.Municipio.setText(datosPaciente.getMunicipio());
-                    visualizar.Nombre_madre.setText(datosPaciente.getFamiliar());
-                    visualizar.Curp.setText(datosPaciente.getCurp());
-                    visualizar.Telefono.setText(datosPaciente.getTelefono());
-                    visualizar.getJtxtaAlergias().setText(datosPaciente.getAlergias());
-                } else {
-                    System.err.println("No se encontraron datos para el expediente: " + expediente);
-                }
-                
-                visualizar.setVisible(true);
-                view.dispose();
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un paciente para continuar");
-            }
-        });
+                try {
+                    // Abrimos la nueva ventana usando el initializer
+                    WindowManager.showWindow(Visualizar.class, v -> {
+                        // Cargar y asignar datos antes de mostrar la ventana
+                        new Visualizar_Logic(v, id, expediente, name); 
+                        ArrayList<Paciente> datosPacientes = dataSource.verPaciente(expediente);
+                        if (!datosPacientes.isEmpty()) {
+                            Paciente datosPaciente = datosPacientes.get(0);
+                            v.getExpediente().setText(datosPaciente.getExpediente());
+                            v.getFecha().setText(datosPaciente.getFecha());
+                            v.getNombre().setText(datosPaciente.getNombre());
+                            v.getNacimiento().setText(datosPaciente.getFecha_nacimiento());
+                            v.getSexo().setSelectedItem(datosPaciente.getSexo());
+                            v.getDireccion().setText(datosPaciente.getDomicilio());
+                            v.getLocalidad().setText(datosPaciente.getLocalidad());
+                            v.getMunicipio().setText(datosPaciente.getMunicipio());
+                            v.getNombreMadre().setText(datosPaciente.getFamiliar());
+                            v.getCurp().setText(datosPaciente.getCurp());
+                            v.getTelefono().setText(datosPaciente.getTelefono());
+                            v.getJtxtaAlergias().setText(datosPaciente.getAlergias());
+                        } else {
+                            System.err.println("No se encontraron datos para el expediente: " + expediente);
+                        }
+                    });
 
-        // Evento del botón Prestamo (nueva funcionalidad para abrir Consulta)
-        view.getBtnConsulta().addActionListener(e -> {
-            int selectedRow = view.getTablaPacientes().getSelectedRow();
-            if (selectedRow > -1) {
-                Paciente paciente = getPacienteSeleccionado(selectedRow);
-                if (paciente != null) {
-                    Consulta consultaView = new Consulta(paciente.getId_paciente(), paciente.getExpediente());
-                    consultaView.setVisible(true);
-                    new Consulta_Logic(consultaView); // Asumiendo que tienes una clase Consulta_Logic
-                    view.setVisible(false);
+                    WindowManager.hideWindow(Buscar.class);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, "Error al abrir Visualizar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un paciente para continuar");
             }
@@ -111,9 +120,10 @@ public class Buscar_Logic {
                     History_ui h = new History_ui();
                     h.getLbExpediente().setText(p.getExpediente());
                     h.getLbName().setText(p.getNombre());
-                    new History_Logic(h, p.getId_paciente(), p.getExpediente(), p.getNombre()); // Inicializar la lógica con el id del paciente
-                    h.setVisible(true);
-                    view.dispose();
+                    
+                    WindowManager.showWindow(History_ui.class, (vista) -> {
+                    new History_Logic(vista, p.getId_paciente(), p.getExpediente(), p.getNombre());
+                    });
                 }
             }else {
                 JOptionPane.showMessageDialog(null, "Seleccione un paciente para continuar");
@@ -122,10 +132,41 @@ public class Buscar_Logic {
 
         // Evento del botón Regresar
         view.getRegresar().addActionListener(e -> {
-            Menu menu = new Menu();
-            menu.setVisible(true);
-            view.dispose();
+            
+            WindowManager.hideWindow(Buscar.class);
+            
+            WindowManager.showWindow(Menu.class);
+            
         });
+        
+        view.getBtnConsulta().addActionListener(e -> {
+            List<Paciente> info = new ArrayList<>();
+            if (buscador.isEmpty()) {
+                info = dataSource.consultarPacientes();
+                System.out.println("OPCION 1");
+            } else {
+                info = dataSource.buscarPacientes(buscador.get(0));
+                System.out.println("OPCION 2");
+                System.out.println(buscador.get(0));
+            }
+
+            if (view.Tabla_Pacientes.getSelectedRow() > -1 && !info.isEmpty()) {
+                Paciente p = info.get(view.Tabla_Pacientes.getSelectedRow());
+                Long idPaciente = p.getId_paciente();
+                String expediente = p.getExpediente();
+
+                WindowManager.showWindow(Consulta.class, (vista) -> {
+                    vista.setIdPaciente(idPaciente);
+                    vista.setExpediente(expediente);
+                    vista.setModo("nueva_consulta");
+                    new Consulta_Logic(vista, idPaciente, expediente, "nueva_consulta", null);
+                });
+                //WindowManager.hideWindow(Buscar.class); // Oculta Buscar
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un paciente para continuar");
+            }
+        });
+            
 
         // Evento del botón Delete
         view.getDelete().addActionListener(e -> {

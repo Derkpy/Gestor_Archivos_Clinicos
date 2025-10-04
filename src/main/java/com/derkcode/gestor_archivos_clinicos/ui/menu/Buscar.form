@@ -110,7 +110,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnVer" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnDefuncion" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="btnHistorialPaciente" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnPrestamo" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
                                   <Component id="Regresar" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtBuscar" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnPrestamo" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="btnDefuncion" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnHistorialPaciente" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Delete" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -202,7 +202,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrestamoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnDefuncion">
+            <Component class="javax.swing.JButton" name="btnHistorialPaciente">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/images/acta-de-defuncion.png&quot;))" type="code"/>
@@ -212,7 +212,7 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDefuncionActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorialPacienteActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Delete">

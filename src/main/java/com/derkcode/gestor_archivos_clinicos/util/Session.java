@@ -27,7 +27,7 @@ public class Session {
     private String address;
 
     public Session(long id_doctor, String user, String username, String specialty, long phone_number, String cedula, String address) {
-        this.id_doctor = this.id_doctor;
+        this.id_doctor = id_doctor;
         this.user = user;
         this.username = username;
         this.specialty = specialty;

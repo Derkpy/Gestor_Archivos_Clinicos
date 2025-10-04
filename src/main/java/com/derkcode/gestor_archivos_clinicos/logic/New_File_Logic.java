@@ -5,7 +5,7 @@
 package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.management.New_File;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -13,7 +13,8 @@ import javax.swing.UIManager;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
 import com.derkcode.gestor_archivos_clinicos.ui.menu.Menu;
 import java.awt.Window;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Consulta;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Consulta;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 
 /**
  *
@@ -37,19 +38,19 @@ public class New_File_Logic {
     }
 
     private void iniListeners() {
+        
+        
+        
         nf_view.getjCheckBox1().addActionListener(e -> {
             habilitarSegunCheckBox(nf_view.getNombre_madre(), nf_view.getjCheckBox1());
         });
 
         nf_view.getCancelar().addActionListener(e -> {
-            Window[] windows = Window.getWindows();
-            for (Window w : windows) {
-                if (w instanceof Menu && !w.isVisible()) {
-                    w.setVisible(true);
-                    break;
-                }
-            }
-            nf_view.dispose();
+            
+            WindowManager.closeWindow(New_File.class);
+            
+            WindowManager.showWindow(Menu.class);
+            
         });
 
         nf_view.getGuardar().addActionListener(e -> {
@@ -63,16 +64,20 @@ public class New_File_Logic {
 
                     UIManager.put("OptionPane.yesButtonText", "Sí");
                     UIManager.put("OptionPane.noButtonText", "No");
-                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea generar una consulta al paciente?", 
+                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea generar una consulta al paciente?",
                             "Confirmación", JOptionPane.YES_NO_OPTION);
 
                     if (respuesta == JOptionPane.YES_OPTION) {
                         Long idPaciente = paciente.getIdPaciente();
                         String expediente = paciente.getExpediente();
-                        Consulta consultaView = new Consulta(idPaciente, expediente, "nueva_consulta");
-                        consultaView.setVisible(true);
-                        new Consulta_Logic(consultaView);
-                        nf_view.setVisible(false);
+
+                        WindowManager.showWindow(Consulta.class, (vista) -> {
+                            vista.setIdPaciente(idPaciente);
+                            vista.setExpediente(expediente);
+                            vista.setModo("nueva_consulta");
+                            new Consulta_Logic(vista, idPaciente, expediente, "nueva_consulta", null);
+                        });
+                        WindowManager.closeWindow(New_File.class); // Cierra New_File después de abrir Consulta
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al guardar el paciente");

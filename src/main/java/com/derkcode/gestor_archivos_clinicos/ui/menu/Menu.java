@@ -4,10 +4,14 @@ import javax.swing.ImageIcon;
 import com.derkcode.gestor_archivos_clinicos.logic.New_File_Logic;
 import java.awt.event.WindowAdapter;
 import com.derkcode.gestor_archivos_clinicos.data.connection.DatabaseConnection; // Ajusta el paquete según tu proyecto
+import com.derkcode.gestor_archivos_clinicos.logic.Buscar_Logic;
 import com.derkcode.gestor_archivos_clinicos.logic.Profile_Doctor_Logic;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.management.New_File;
 import com.derkcode.gestor_archivos_clinicos.ui.profile.Profile_Doctor;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 import java.awt.event.WindowEvent;
+import java.awt.Image;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,6 +22,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/images/Icono.png")).getImage());
+        iniFondo();
         this.setLocationRelativeTo(null);
     
         this.addWindowListener(new WindowAdapter() {
@@ -69,8 +74,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        panel_main_menu = new javax.swing.JPanel();
 
         jMenu3.setText("jMenu3");
 
@@ -251,30 +255,17 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        panel_main_menu.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Creditos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+        javax.swing.GroupLayout panel_main_menuLayout = new javax.swing.GroupLayout(panel_main_menu);
+        panel_main_menu.setLayout(panel_main_menuLayout);
+        panel_main_menuLayout.setHorizontalGroup(
+            panel_main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 694, Short.MAX_VALUE)
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(339, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+        panel_main_menuLayout.setVerticalGroup(
+            panel_main_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 372, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -283,7 +274,7 @@ public class Menu extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_main_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(125, 125, 125)
@@ -295,7 +286,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_main_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -328,38 +319,48 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void iniFondo(){
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/GyE_Logo.png"));
+        Image img = icon.getImage().getScaledInstance(350, 325, Image.SCALE_SMOOTH);
+        JLabel background = new JLabel(new ImageIcon(img));
+        
+        int x = (panel_main_menu.getWidth() - 350) / 2;
+        int y = (panel_main_menu.getHeight() - 325) / 2;
+
+        background.setBounds(x, y, 350, 325);
+        
+        panel_main_menu.setLayout(null); // Para poder usar setBounds
+        panel_main_menu.add(background);
+
+    }
+    
     private void btn_perfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_perfilActionPerformed
         
-        Profile_Doctor p = new Profile_Doctor();
-        p.setVisible(true);
-        new Profile_Doctor_Logic(p);
-        this.dispose();
-        
+        //WindowManager.hideWindow(Menu.class);
+        WindowManager.showWindow(Profile_Doctor.class, (vista) -> {
+            new Profile_Doctor_Logic(vista);
+        });
 
     }//GEN-LAST:event_btn_perfilActionPerformed
 
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
-                                          
-        New_File n = new New_File();
-        n.setVisible(true);
-        new New_File_Logic(n); // Inyecta la lógica
-        this.setVisible(false); // Oculta Login en lugar de cerrarlo
+           
+        WindowManager.hideWindow(Menu.class);
+        WindowManager.showWindow(New_File.class, (vista) -> {
+            new New_File_Logic(vista);
+        });
     
     }//GEN-LAST:event_IngresarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        // TODO add your handling code here:
-        Buscar a = new Buscar();
-        a.setVisible(true);
-        this.dispose();
+        
+        WindowManager.hideWindow(Menu.class);
+        WindowManager.showWindow(Buscar.class, (vista) -> {
+            new Buscar_Logic(vista);
+        });
+        
     }//GEN-LAST:event_BuscarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,7 +371,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton Buscar;
     private javax.swing.JButton Ingresar;
     private javax.swing.JButton btn_perfil;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -400,10 +400,10 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JPanel panel_main_menu;
     // End of variables declaration//GEN-END:variables
 }

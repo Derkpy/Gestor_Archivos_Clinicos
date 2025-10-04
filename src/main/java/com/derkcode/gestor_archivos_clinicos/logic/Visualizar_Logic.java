@@ -6,8 +6,9 @@ package com.derkcode.gestor_archivos_clinicos.logic;
 
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
 import com.derkcode.gestor_archivos_clinicos.ui.menu.Buscar;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.management.History_ui;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 import javax.swing.JOptionPane;
 
 public class Visualizar_Logic {
@@ -16,14 +17,15 @@ public class Visualizar_Logic {
     private long idSelec;
     private String expediente;
     private String name;
-    
+
     public Visualizar_Logic(Visualizar view, long idPaciente, String expediente, String name) {
         this.view = view;
         this.dataSource = new DataSource();
         this.idSelec = idPaciente;
         this.expediente = expediente;
         this.name = name;
-        view.getExpediente().setText(expediente); // Asignar el expediente inicial
+        System.out.println("El expediente que pasa a mi vista es: " + expediente);
+        view.getExpediente().setText(expediente);
         initializeComponents();
         iniListeners();
     }
@@ -51,20 +53,21 @@ public class Visualizar_Logic {
             deshabilitarTextAreas(view.getJtxtaAlergias());
             deshabilitarComponentes(view.getBtnGuardar(), view.getBtnCancelar());
         });
-
+        
         // Evento del botón Guardar (solo guarda y verifica duplicación)
         view.getBtnGuardar().addActionListener(e -> {
             String update = String.valueOf(idSelec);
             String rep = view.getExpediente().getText();
-
-            if (!rep.equals(view.getExpedientes().get(0)) && dataSource.expedienteExiste(rep)) {
+            
+            if (dataSource.expedienteExiste(rep) && !rep.equals(this.expediente)) {
                 JOptionPane.showMessageDialog(null, "EXPEDIENTE DUPLICADO, INGRESE UNO DIFERENTE");
             } else {
                 dataSource.updatePaciente(update, view);
+                System.out.println("El id a actualizar es: " + update);
                 deshabilitarComponentes(
-                    view.getExpediente(), view.getFecha(), view.getNombre(),
-                    view.getNacimiento(), view.getNombreMadre(), view.getDireccion(),
-                    view.getLocalidad(), view.getMunicipio(), view.getCurp(), view.getTelefono()
+                        view.getExpediente(), view.getFecha(), view.getNombre(),
+                        view.getNacimiento(), view.getNombreMadre(), view.getDireccion(),
+                        view.getLocalidad(), view.getMunicipio(), view.getCurp(), view.getTelefono()
                 );
                 deshabilitarComponentes(view.getSexo());
                 deshabilitarTextAreas(view.getJtxtaAlergias());
@@ -87,20 +90,34 @@ public class Visualizar_Logic {
         // Evento del botón Regresar
         view.getBtnRegresar().addActionListener(e -> {
            
-            Buscar b = new Buscar();
-            b.setVisible(true);
-            view.dispose();
-        
+            WindowManager.closeWindow(Visualizar.class);
+            WindowManager.showWindow(Buscar.class, (vista) -> {
+                new Buscar_Logic(vista);
+            });
+            
+            //Buscar b = new Buscar();
+            //b.setVisible(true);
+            //view.dispose();
+            
         });
 
         /// Evento del botón Historial
         view.getJBtnHistorial().addActionListener(e -> {
+            
             History_ui h = new History_ui();
             h.getLbExpediente().setText(expediente);
             h.getLbName().setText(name);
-            new History_Logic(h, idSelec, expediente, name); // Inicializar la lógica con el id del paciente
-            h.setVisible(true);
-            view.dispose();
+            
+            WindowManager.closeWindow(Visualizar.class);
+            
+            WindowManager.showWindow(History_ui.class, (vista) -> {
+                new History_Logic(vista, idSelec, expediente, name);
+            });
+            
+            
+            //new History_Logic(h, idSelec, expediente, name); // Inicializar la lógica con el id del paciente
+            //h.setVisible(true);
+            //view.dispose();
         });
     }
 

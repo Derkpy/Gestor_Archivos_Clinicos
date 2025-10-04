@@ -4,9 +4,10 @@
  */
 package com.derkcode.gestor_archivos_clinicos.logic;
 
-import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.source.DataSource;
 import com.derkcode.gestor_archivos_clinicos.ui.profile.Profile_Doctor;
+import com.derkcode.gestor_archivos_clinicos.util.Session;
+import com.derkcode.gestor_archivos_clinicos.util.Managers.WindowManager;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
@@ -44,7 +45,10 @@ public class Profile_Doctor_Logic {
     private void iniListeners() {
         
         view.getBtnBack().addActionListener(e -> {
-            // Lógica de back será implementada por ti
+            
+            WindowManager.closeWindow(Profile_Doctor.class);
+            
+            
         });
 
         view.getBtnChargeImage().addActionListener(e -> {
@@ -73,6 +77,14 @@ public class Profile_Doctor_Logic {
         });
 
         view.getBtnSave().addActionListener(e -> {
+            
+            if (query.actualizarPerfil(view, Session.getInstance().getIdDoctor()) == true) {
+                JOptionPane.showMessageDialog(view, "Informacion actualizada correctamente");
+            } else {
+                JOptionPane.showMessageDialog(view,"Fallo la actualizacion de información");
+            }
+            
+            /*
             Doctor_model doctor = new Doctor_model();
 
             // Recolectar datos de los TextField
@@ -86,11 +98,10 @@ public class Profile_Doctor_Logic {
                 return;
             }
             doctor.setCedula(view.getTextCed().getText());
-            doctor.setAddress(view.getTextAddress().getText());
-
-            // Nota: No se guarda el logo aquí, solo se recolectan los datos del modelo
-            JOptionPane.showMessageDialog(view, "Datos recolectados: \n" + doctor.toString(), "Información", JOptionPane.INFORMATION_MESSAGE);
-            // Aquí puedes agregar la lógica de guardado en la base de datos cuando esté lista
+            doctor.setAddress(view.getTextAddress().getText());*/
+            
+            //JOptionPane.showMessageDialog(view, "Datos recolectados: \n" + doctor.toString(), "Información", JOptionPane.INFORMATION_MESSAGE);
+            
         });
     }
 

@@ -50,7 +50,7 @@ public class Buscar extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         btnPrestamo = new javax.swing.JButton();
-        btnDefuncion = new javax.swing.JButton();
+        btnHistorialPaciente = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -109,13 +109,13 @@ public class Buscar extends javax.swing.JFrame {
             }
         });
 
-        btnDefuncion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acta-de-defuncion.png")));
-        btnDefuncion.setToolTipText("Archivo en defuncion");
-        btnDefuncion.setBorderPainted(false);
-        btnDefuncion.setContentAreaFilled(false);
-        btnDefuncion.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorialPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acta-de-defuncion.png")));
+        btnHistorialPaciente.setToolTipText("Archivo en defuncion");
+        btnHistorialPaciente.setBorderPainted(false);
+        btnHistorialPaciente.setContentAreaFilled(false);
+        btnHistorialPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDefuncionActionPerformed(evt);
+                btnHistorialPacienteActionPerformed(evt);
             }
         });
 
@@ -143,7 +143,7 @@ public class Buscar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDefuncion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnHistorialPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -161,7 +161,7 @@ public class Buscar extends javax.swing.JFrame {
                             .addComponent(Regresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDefuncion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnHistorialPaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -282,9 +282,9 @@ public class Buscar extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnPrestamoActionPerformed
 
-    private void btnDefuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDefuncionActionPerformed
+    private void btnHistorialPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialPacienteActionPerformed
 
-    }//GEN-LAST:event_btnDefuncionActionPerformed
+    }//GEN-LAST:event_btnHistorialPacienteActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         
@@ -328,7 +328,7 @@ public class Buscar extends javax.swing.JFrame {
     }
 
     public JButton getBtnHistorial(){
-        return btnDefuncion;
+        return btnHistorialPaciente;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -336,7 +336,7 @@ public class Buscar extends javax.swing.JFrame {
     private javax.swing.JButton Regresar;
     public javax.swing.JTable Tabla_Pacientes;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnDefuncion;
+    private javax.swing.JButton btnHistorialPaciente;
     private javax.swing.JButton btnPrestamo;
     private javax.swing.JButton btnVer;
     private javax.swing.JPanel jPanel1;

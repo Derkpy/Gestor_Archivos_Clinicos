@@ -8,8 +8,9 @@ import com.derkcode.gestor_archivos_clinicos.data.model.Consulta_Model;
 import com.derkcode.gestor_archivos_clinicos.data.model.Paciente;
 import com.derkcode.gestor_archivos_clinicos.data.model.Doctor_model;
 import com.derkcode.gestor_archivos_clinicos.data.model.PacienteInsertado;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.New_File;
-import com.derkcode.gestor_archivos_clinicos.ui.Management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.management.New_File;
+import com.derkcode.gestor_archivos_clinicos.ui.management.Visualizar;
+import com.derkcode.gestor_archivos_clinicos.ui.profile.Profile_Doctor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,10 @@ public interface DataDao {
     
     public List<Consulta_Model> extraerConsultas(Long id);
     
-    public List<Doctor_model> extraerInfoDoctor(String user, String password);
+    public List<Doctor_model> extraerSesionDoctor(String user, String password);
     
-    //public List<Consulta_Model> extraerConsulta(Long id)
+    public boolean actualizarPerfil(Profile_Doctor s, long id_doctor);
+    
+    public Doctor_model actualizarContraseña(Profile_Doctor s);
+    
 }
